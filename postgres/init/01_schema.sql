@@ -1,0 +1,2 @@
+-- TODO — Step 6: PostgreSQL schema
+-- Defines feature tables and user access control (spark_user WRITE, ml_readonly READ)
