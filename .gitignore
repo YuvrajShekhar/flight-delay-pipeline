@@ -1,0 +1,33 @@
+# Environment variables — NEVER commit credentials
+.env
+
+# Dataset files — too large for Git (download from Kaggle separately)
+data/*
+!data/.gitkeep
+
+# Airflow logs
+airflow/logs/*
+!airflow/logs/.gitkeep
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+
+# macOS
+.DS_Store
+
+# VS Code
+.vscode/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Spark local metadata
+derby.log
+metastore_db/
+
+# Docker volumes (if mounted locally)
+postgres_data/
+minio_data/
