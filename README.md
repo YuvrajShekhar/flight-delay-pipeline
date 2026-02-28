@@ -1,4 +1,4 @@
-# Flight Delay Prediction - Batch Processing Data Pipeline
+# Flight Delay Prediction : Batch Processing Data Pipeline
 
 **IU International University of Applied Sciences**  
 Module: Data Engineering (DLMDSEDE02) | Task 1 | Phase 2  
