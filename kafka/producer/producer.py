@@ -36,9 +36,11 @@ logger = logging.getLogger(__name__)
 # ── Load environment variables ────────────────────────────────
 load_dotenv()
 
-KAFKA_BROKER  = os.getenv("KAFKA_BROKER", "kafka:9092")
+# KAFKA_BROKER  = os.getenv("KAFKA_BROKER", "kafka:9092")
+KAFKA_BROKER = "localhost:9092"
 KAFKA_TOPIC   = os.getenv("KAFKA_TOPIC",  "flight-records-raw")
-DATA_PATH     = os.getenv("DATA_LOCAL_PATH", "/opt/airflow/data")
+# DATA_PATH     = os.getenv("DATA_LOCAL_PATH", "/opt/airflow/data")
+DATA_PATH = "/root/Yuvraj_Projects/Project_Data_Enginnering/flight-delay-pipeline/data/"
 FLIGHTS_FILE  = os.path.join(DATA_PATH, "flights.csv")
 
 # How many records to log progress on
