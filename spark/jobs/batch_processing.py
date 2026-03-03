@@ -41,9 +41,9 @@ logging.basicConfig(
 log = logging.getLogger(__name__)
 
 # ── Configuration ─────────────────────────────────────────────
-MINIO_ENDPOINT      = os.getenv("MINIO_ENDPOINT",      "http://minio:9000")
+MINIO_ENDPOINT      = os.getenv("MINIO_ENDPOINT",      "http://localhost:9000")
 MINIO_ACCESS_KEY    = os.getenv("MINIO_ROOT_USER",      "minioadmin")
-MINIO_SECRET_KEY    = os.getenv("MINIO_ROOT_PASSWORD",  "minioadmin")
+MINIO_SECRET_KEY    = os.getenv("MINIO_ROOT_PASSWORD",  "yuvi@123")
 MINIO_BUCKET        = os.getenv("MINIO_BUCKET",         "flight-data")
 
 POSTGRES_HOST       = os.getenv("POSTGRES_HOST",        "postgres")
@@ -52,7 +52,8 @@ POSTGRES_DB         = os.getenv("POSTGRES_DB",          "flight_features")
 POSTGRES_USER       = os.getenv("POSTGRES_USER",        "spark_user")
 POSTGRES_PASSWORD   = os.getenv("POSTGRES_PASSWORD",    "changeme_spark_password")
 
-DATA_PATH           = os.getenv("DATA_LOCAL_PATH",      "/opt/airflow/data")
+# DATA_PATH           = os.getenv("DATA_LOCAL_PATH", "/opt/airflow/data")
+DATA_PATH = "/root/Yuvraj_Projects/Project_Data_Enginnering/flight-delay-pipeline/data/"
 FLIGHTS_CSV         = os.path.join(DATA_PATH, "flights.csv")
 AIRLINES_CSV        = os.path.join(DATA_PATH, "airlines.csv")
 AIRPORTS_CSV        = os.path.join(DATA_PATH, "airports.csv")
