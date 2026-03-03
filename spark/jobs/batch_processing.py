@@ -46,11 +46,12 @@ MINIO_ACCESS_KEY    = os.getenv("MINIO_ROOT_USER",      "minioadmin")
 MINIO_SECRET_KEY    = os.getenv("MINIO_ROOT_PASSWORD",  "yuvi@123")
 MINIO_BUCKET        = os.getenv("MINIO_BUCKET",         "flight-data")
 
-POSTGRES_HOST       = os.getenv("POSTGRES_HOST",        "postgres")
+# POSTGRES_HOST       = os.getenv("POSTGRES_HOST",        "postgres")
+POSTGRES_HOST = os.getenv("POSTGRES_HOST", "127.0.0.1")
 POSTGRES_PORT       = os.getenv("POSTGRES_PORT",        "5432")
 POSTGRES_DB         = os.getenv("POSTGRES_DB",          "flight_features")
 POSTGRES_USER       = os.getenv("POSTGRES_USER",        "spark_user")
-POSTGRES_PASSWORD   = os.getenv("POSTGRES_PASSWORD",    "changeme_spark_password")
+POSTGRES_PASSWORD   = os.getenv("POSTGRES_PASSWORD",    "yuvi@123")
 
 # DATA_PATH           = os.getenv("DATA_LOCAL_PATH", "/opt/airflow/data")
 DATA_PATH = "/root/Yuvraj_Projects/Project_Data_Enginnering/flight-delay-pipeline/data/"
@@ -82,7 +83,12 @@ def create_spark_session() -> SparkSession:
         .config("spark.hadoop.fs.s3a.impl",                   "org.apache.hadoop.fs.s3a.S3AFileSystem")
         .config("spark.hadoop.fs.s3a.aws.credentials.provider","org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider")
         .config("spark.sql.adaptive.enabled",                  "true")
-        .config("spark.sql.shuffle.partitions",                "8")
+        .config("spark.sql.shuffle.partitions", "4")
+        .config("spark.driver.memory", "4g")
+        .config("spark.executor.memory", "4g")
+        .config("spark.driver.extraJavaOptions", "-Xss4m")
+        .config("spark.executor.extraJavaOptions", "-Xss4m")
+        .config("spark.jars", "/root/Yuvraj_Projects/Project_Data_Enginnering/flight-delay-pipeline/spark/jars/postgresql-42.7.3.jar")
         .getOrCreate()
     )
 
@@ -363,16 +369,26 @@ def main():
     try:
         # Stage 1 — Clean
         clean_df = clean_data(spark)
+        print("Stage 1 count:", clean_df.count())
 
         # Stage 2 — Enrich
         enriched_df = enrich_data(spark, clean_df)
+        print("Stage 2 count:", enriched_df.count())
 
         # Stage 3 — Feature Engineering
         featured_df = engineer_features(enriched_df)
+        featured_df.select("airline", "departure_delay", "is_delayed",
+                           "scheduled_departure_hour", "has_weather_delay",
+                           "total_delay_causes_min").show(5)
+        print("Stage 3 count:", featured_df.count())
 
-        # Stage 4 — Aggregation
+        # # Stage 4 — Aggregation
         tables = aggregate_features(featured_df)
-
+        for name, df in tables.items():
+            print(f"\n--- {name} ---")
+            df.show(3)
+            print(f"{name} row count:", df.count())
+        
         # Stage 5 — Load to PostgreSQL
         load_to_postgres(tables)
 

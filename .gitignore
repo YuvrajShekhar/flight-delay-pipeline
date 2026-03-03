@@ -31,3 +31,4 @@ metastore_db/
 # Docker volumes (if mounted locally)
 postgres_data/
 minio_data/
+spark/jars/*.jar

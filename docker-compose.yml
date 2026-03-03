@@ -139,6 +139,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    ports:
+    - "5433:5432"
 
   # ── 6. Apache Airflow (Orchestration) ─────────────────────
   # Uses a custom Dockerfile that extends apache/airflow:2.7.0
