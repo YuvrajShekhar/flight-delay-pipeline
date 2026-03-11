@@ -166,6 +166,7 @@ services:
       - ./airflow/plugins:/opt/airflow/plugins
       - ./data:/opt/airflow/data                  # dataset files
       - ./spark/jobs:/opt/airflow/spark/jobs      # PySpark scripts
+      - ./spark/jars:/opt/airflow/spark/jars      # JDBC driver for Spark→PostgreSQL
     environment:
       AIRFLOW__CORE__EXECUTOR: ${AIRFLOW__CORE__EXECUTOR}
       AIRFLOW__CORE__SQL_ALCHEMY_CONN: ${AIRFLOW__CORE__SQL_ALCHEMY_CONN}
@@ -188,7 +189,7 @@ services:
       MINIO_RAW_PREFIX: ${MINIO_RAW_PREFIX}
     ports:
       - "8080:8080"   # Airflow web UI
-    command: bash -c "airflow db init && airflow users create --username admin --password yuvi@123 --firstname Yuvraj --lastname Shekhar --role Admin --email admin@flightdelay.local && airflow webserver"
+    command: bash -c "airflow db upgrade && airflow users create --username admin --password yuvi@123 --firstname Yuvraj --lastname Shekhar --role Admin --email admin@flightdelay.local || true && airflow webserver"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
       interval: 30s
@@ -212,6 +213,7 @@ services:
       - ./airflow/plugins:/opt/airflow/plugins
       - ./data:/opt/airflow/data
       - ./spark/jobs:/opt/airflow/spark/jobs
+      - ./spark/jars:/opt/airflow/spark/jars      # JDBC driver for Spark→PostgreSQL
     environment:
       AIRFLOW__CORE__EXECUTOR: ${AIRFLOW__CORE__EXECUTOR}
       AIRFLOW__CORE__SQL_ALCHEMY_CONN: ${AIRFLOW__CORE__SQL_ALCHEMY_CONN}

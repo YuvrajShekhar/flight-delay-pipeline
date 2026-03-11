@@ -53,8 +53,7 @@ POSTGRES_DB         = os.getenv("POSTGRES_DB",          "flight_features")
 POSTGRES_USER       = os.getenv("POSTGRES_USER",        "spark_user")
 POSTGRES_PASSWORD   = os.getenv("POSTGRES_PASSWORD",    "yuvi@123")
 
-# DATA_PATH           = os.getenv("DATA_LOCAL_PATH", "/opt/airflow/data")
-DATA_PATH = "/root/Yuvraj_Projects/Project_Data_Enginnering/flight-delay-pipeline/data/"
+DATA_PATH = os.getenv("DATA_LOCAL_PATH", "/opt/airflow/data")
 FLIGHTS_CSV         = os.path.join(DATA_PATH, "flights.csv")
 AIRLINES_CSV        = os.path.join(DATA_PATH, "airlines.csv")
 AIRPORTS_CSV        = os.path.join(DATA_PATH, "airports.csv")
