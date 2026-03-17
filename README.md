@@ -1,7 +1,7 @@
 # Flight Delay Prediction : Batch Processing Data Pipeline
 
 **IU International University of Applied Sciences**  
-Module: Data Engineering (DLMDSEDE02) | Task 1 | Phase 2  
+Module: Data Engineering (DLMDSEDE02) | Task 1   
 
 **Author:** Yuvraj Shekhar
 
